@@ -60,7 +60,7 @@ There are currently two scripts to use:
 
 		$ s3-image-upload --key an_example_key --file webstack.img
 
- * **s3-image-downlaod**
+ * **s3-image-download**
 
     `s3-image-download` will download an existing file on Amazon S3, given the case you have provided the correct key.
 
