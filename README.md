@@ -22,8 +22,10 @@ Setup
 
 	2. Shell variables:
 
-	    $ export AWS_ACCESS_KEY_ID=<Your AWS Access Key ID>
-        $ export AWS_SECRET_ACCESS_KEY=<Your AWS Secret Access Key>
+		$ export AWS_ACCESS_KEY_ID=<Your AWS Access Key ID>
+
+		$ export AWS_SECRET_ACCESS_KEY=<Your AWS Secret Access Key>
+
 
 
 Quick Start
