@@ -12,9 +12,8 @@
 """
 import argparse
 from ConfigurationHandler import ConfigurationHandler
-from libs3 import download
+from libs3 import download, logger
 from version import __version__
-from LogHandler import LogHandler
 
 ####################################################################
 #
@@ -58,7 +57,7 @@ def main():
     image_key = args.key
 
     # Ok, all set! We can download the file ...
-    log.debug('Downloading with key: "" from bucket: "" to output file: "{}" '.format(image_key, bucket,
+    log.debug('Downloading with key: "{}" from bucket: "{}" to output file: "{}" '.format(image_key, bucket,
         destination_file))
     download(destination_file, image_key, bucket)
 
@@ -72,6 +71,6 @@ def main():
 ####################################################################
 
 if __name__ == "__main__":
-    log = LogHandler().get_logger('s3-image-download')
+    log = logger.get_logger('s3-image-download')
     config = ConfigurationHandler().read_configuration()
     main()

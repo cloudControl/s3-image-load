@@ -18,9 +18,8 @@ import argparse
 import os
 import sys
 from ConfigurationHandler import ConfigurationHandler
-from libs3 import upload
+from libs3 import upload, logger
 from version import __version__
-from LogHandler import LogHandler
 
 
 ####################################################################
@@ -71,7 +70,7 @@ def main():
         sys.exit("{} is not a valid (image) file!".format(image_file))
 
     # Ok, all set! We can upload the file ...
-    log.debug('Uploading file: "{}" with key: "" to bucket: ""'.format(image_file, image_key, bucket))
+    log.debug('Uploading file: "{}" with key: "{}" to bucket: "{}"'.format(image_file, image_key, bucket))
     upload(image_file, image_key, bucket)
 
     return 0
@@ -84,6 +83,6 @@ def main():
 ####################################################################
 
 if __name__ == "__main__":
-    log = LogHandler().get_logger('s3-image-upload')
+    log = logger.get_logger('s3-image-upload')
     config = ConfigurationHandler().read_configuration()
     main()
