@@ -19,6 +19,16 @@ from LogHandler import LogHandler
 
 ####################################################################
 #
+# GLOBALS
+#
+####################################################################
+
+# Logger with given log file name (placed in /tmp/)
+logger = LogHandler(log_filename='s3-image-load.log')
+
+
+####################################################################
+#
 # FUNCTIONS
 #
 ####################################################################
@@ -27,7 +37,7 @@ def connect():
     """
         Connect to S3 with credentials
     """
-    log = LogHandler().get_logger()
+    log = logger.get_logger("connect")
 
     try:
         s3 = boto.connect_s3()
@@ -42,7 +52,7 @@ def upload(image_file, image_key, bucket_name):
     """
         Upload a given image file to our S3 bucket
     """
-    log = LogHandler().get_logger()
+    log = logger.get_logger("upload")
 
     try:
         s3 = connect()
@@ -64,7 +74,7 @@ def download(destination_file, image_key, bucket_name):
     """
         Upload a given image file to our S3 bucket
     """
-    log = LogHandler().get_logger()
+    log = logger.get_logger("download")
 
     try:
         s3 = connect()
