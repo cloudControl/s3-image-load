@@ -22,9 +22,9 @@ Setup
 
 	2. Shell variables:
 
-		$ export AWS_ACCESS_KEY_ID=<Your AWS Access Key ID>
+		$ export AWS_ACCESS_KEY_ID="_your_AWS_Access_Key_ID_"
 
-		$ export AWS_SECRET_ACCESS_KEY=<Your AWS Secret Access Key>
+		$ export AWS_SECRET_ACCESS_KEY="_your_AWS_Secret_Access_Key_"
 
 
 
