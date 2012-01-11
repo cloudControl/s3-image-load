@@ -5,7 +5,7 @@ This is the s3-image-load repository. The set of scripts provide methods to uplo
 Requirements
 ------------
  * `boto` : [Boto on Google Code](http://code.google.com/p/boto/)
- * valid Amazon AWS Credentials for
+ * [Amazon AWS](http://aws.amazon.com/) Credentials (Access Key & Secret Key)
 
 
 Setup
