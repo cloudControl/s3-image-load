@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
     Copyright 2011 cloudControl GmbH
@@ -14,13 +13,21 @@
 
     Bug request to: Hans-Gunther Schmidt (hgs@cloudcontrol.com)
 """
+
 import argparse
 import os
 import sys
-import definitions
+from ConfigurationHandler import ConfigurationHandler
 from libs3 import upload
 from version import __version__
-from definitions import CLOUDCONTROL_SQUASHFS_IMAGE_BUCKET
+from LogHandler import LogHandler
+
+
+####################################################################
+#
+# FUNCTIONS
+#
+####################################################################
 
 
 def parse_shell_parameters():
@@ -34,13 +41,14 @@ def parse_shell_parameters():
     parser = argparse.ArgumentParser(description=description, epilog=epilog, usage=usage)
 
     parser.add_argument('-v', '--version', action='version', version='%(prog)s ver.{}'.format(__version__))
-    parser.add_argument('-d', '--debug', action="store_true", default=False)
     parser.add_argument('-f', '--file', action='store', help="An (squashFS) image file to upload to S3",
         required=True)
     parser.add_argument('-k', '--key', action='store', help="The identifying key for this image in S3",
         required=True)
-    parser.add_argument('-b', '--bucket', action='store', default=CLOUDCONTROL_SQUASHFS_IMAGE_BUCKET,
-        help="A valid AWS S3 bucket (default: \"{}\")".format(CLOUDCONTROL_SQUASHFS_IMAGE_BUCKET))
+    parser.add_argument('-b', '--bucket', action='store', default=config.get('S3', 'bucket'),
+        help="A valid AWS S3 bucket (default: \"{}\")".format(config.get('S3', 'bucket')))
+
+    log.debug("Shell arguments: {}".format(parser.parse_args()))
 
     return parser.parse_args()
 
@@ -49,23 +57,33 @@ def main():
     """
         Run the whole thing
     """
+    # Get the shell arguments
     args = parse_shell_parameters()
 
+    # Transfer shell arguments to variables
     image_file = args.file
     bucket = args.bucket
     image_key = args.key
-    definitions.DEBUGGING = args.debug
 
-    if args.debug:
-        print args
-
+    # Given image file is not a valid file? Hmm, that's a problem!
     if not os.path.isfile(image_file):
+        log.error("{} is not a valid (image) file!".format(image_file))
         sys.exit("{} is not a valid (image) file!".format(image_file))
 
+    # Ok, all set! We can upload the file ...
+    log.debug('Uploading file: "{}" with key: "" to bucket: ""'.format(image_file, image_key, bucket))
     upload(image_file, image_key, bucket)
 
+    return 0
 
+
+####################################################################
 #
 # MAIN
 #
-main()
+####################################################################
+
+if __name__ == "__main__":
+    log = LogHandler().get_logger('s3-image-upload')
+    config = ConfigurationHandler().read_configuration()
+    main()
