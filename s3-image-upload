@@ -1,0 +1,12 @@
+#!/bin/bash
+
+SCRIPTS=$(dirname $0)
+COMMAND=$0
+
+PYTHON="$(which python)"
+if [[ -z $PYTHON ]]; then
+    echo "You are missing a Python installation! Please install Python first."
+    exit 1
+fi
+
+$PYTHON ${SCRIPTS}/src/s3-image-upload.py $*
