@@ -15,15 +15,26 @@
 """
 import sys
 import boto
-from liblog import log
+from LogHandler import LogHandler
+
+####################################################################
+#
+# FUNCTIONS
+#
+####################################################################
 
 def connect():
+    """
+        Connect to S3 with credentials
+    """
+    log = LogHandler().get_logger()
+
     try:
         s3 = boto.connect_s3()
+        log.debug(">>> Connected to S3")
     except boto.exception.NoAuthHandlerFound:
-        sys.exit("Could not find valid AWS credentials! Make sure to set "
-                 "\'AWS_ACCESS_KEY_ID\' and \'AWS_SECRET_ACCESS_KEY\'!")
-
+        sys.exit("Could not find valid AWS credentials! Make sure to set \'AWS_ACCESS_KEY_ID\' and "
+                 "\'AWS_SECRET_ACCESS_KEY\'!")
     return s3
 
 
@@ -31,36 +42,40 @@ def upload(image_file, image_key, bucket_name):
     """
         Upload a given image file to our S3 bucket
     """
+    log = LogHandler().get_logger()
+
     try:
         s3 = connect()
-
-        #        bucket = s3.create_bucket(bucket_name, location=Location.EU)
         bucket = s3.create_bucket(bucket_name)
-
         key = bucket.new_key(image_key)
         key.set_contents_from_filename(image_file)
-
     except boto.exception.S3CreateError as error:
-        log("Could not create {}! Error: {}".format(image_key, error))
+        log.error("Could not create {}! Error: {}".format(image_key, error))
     except (boto.exception.S3DataError, boto.exception.S3PermissionsError, boto.exception.S3ResponseError) as error:
-        log("Ran into boto.exception.S3DataError! Error: {}".format(error))
+        log.error("Ran into boto.exception.S3DataError! Error: {}".format(error))
     except Exception as error:
-        log("Unexpected error! Error: {}".format(error))
+        log.error("Unexpected error! Error: {}".format(error))
         sys.exit(1)
+
+    return 0
 
 
 def download(destination_file, image_key, bucket_name):
     """
         Upload a given image file to our S3 bucket
     """
+    log = LogHandler().get_logger()
+
     try:
         s3 = connect()
         key = s3.get_bucket(bucket_name).get_key(image_key)
         key.get_contents_to_filename(destination_file)
     except boto.exception.S3CreateError as error:
-        log("Could not create {}! Error: {}".format(image_key, error))
+        log.error("Could not create {}! Error: {}".format(image_key, error))
     except (boto.exception.S3DataError, boto.exception.S3PermissionsError, boto.exception.S3ResponseError) as error:
-        log("Ran into boto.exception.S3DataError! Error: {}".format(error))
+        log.error("Ran into boto.exception.S3DataError! Error: {}".format(error))
     except Exception as error:
-        log("Unexpected error! Error: {}".format(error))
+        log.error("Unexpected error! Error: {}".format(error))
         sys.exit(1)
+
+    return 0
