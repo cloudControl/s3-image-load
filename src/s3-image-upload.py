@@ -40,7 +40,7 @@ def parse_shell_parameters():
     parser = argparse.ArgumentParser(description=description, epilog=epilog, usage=usage)
 
     parser.add_argument('-v', '--version', action='version', version='%(prog)s ver.{}'.format(__version__))
-    parser.add_argument('-f', '--file', action='store', help="An (squashFS) image file to upload to S3",
+    parser.add_argument('-i', '--input', action='store', help="An (squashFS) image input file to upload to S3",
         required=True)
     parser.add_argument('-k', '--key', action='store', help="The identifying key for this image in S3",
         required=True)
@@ -60,7 +60,7 @@ def main():
     args = parse_shell_parameters()
 
     # Transfer shell arguments to variables
-    image_file = args.file
+    image_file = args.input
     bucket = args.bucket
     image_key = args.key
 

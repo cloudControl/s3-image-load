@@ -98,7 +98,8 @@ And here is the usage from `s3-image-upload`:
     optional arguments:
       -h, --help            show this help message and exit
       -v, --version         show program's version number and exit
-      -f FILE, --file FILE  An (squashFS) image file to upload to S3
+      -i INPUT, --input INPUT
+                            An (squashFS) image input file to upload to S3
       -k KEY, --key KEY     The identifying key for this image in S3
       -b BUCKET, --bucket BUCKET
                             A valid AWS S3 bucket (default:
