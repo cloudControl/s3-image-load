@@ -34,8 +34,8 @@ Here is a quick description:
       -rw-r--r--  1 hgschmidt  staff  3200853 10 Jan 18:44 input.pdf
 	$ file input.pdf
       input.pdf: PDF document, version 1.6
-	$ s3-image-upload.py -k example_upload_key -f input.pdf
-	$ s3-image-download.py -k example_upload_key -o output.pdf
+	$ s3-image-upload -k example_upload_key -f input.pdf
+	$ s3-image-download -k example_upload_key -o output.pdf
 	$ file *pdf
       input.pdf:  PDF document, version 1.6
       output.pdf: PDF document, version 1.6
@@ -50,21 +50,21 @@ There are currently two scripts to use:
 
     `s3-image-upload` will upload any given file for you, identified by a key provided by you, on Amazon S3.
 
-        $ s3-image-upload.py --key <key> --file <input_filename>
+        $ s3-image-upload --key <key> --file <input_filename>
 
 	e.g.
 
-		$ s3-image-upload.py --key an_example_key --file webstack.img
+		$ s3-image-upload --key an_example_key --file webstack.img
 
  * **s3-image-downlaod**
 
     `s3-image-download` will download an existing file on Amazon S3, given the case you have provided the correct key.
 
-        $ s3-image-download.py --key <key> --output <output_filename>
+        $ s3-image-download --key <key> --output <output_filename>
 
     e.g.
 
-        $ s3-image-download.py --key an_example_key --output webstack-download.img
+        $ s3-image-download --key an_example_key --output webstack-download.img
 
 
 Usage
