@@ -18,14 +18,17 @@ class LogHandler(object):
     log_filename = '{0}.log'.format(logger)
 
 
-    def __init__(self):
+    def __init__(self, log_filename=None):
         """
             Initialize LogHandler
         """
         super(LogHandler, self).__init__()
 
+        if log_filename is None:
+            log_filename = self.log_filename
+
         self.log_formatter = logging.Formatter(self.log_format)
-        self.log_file      = '{0}/{1}'.format(self.log_dir, self.log_filename)
+        self.log_file      = '{0}/{1}'.format(self.log_dir, log_filename)
         self.log_handler   = logging.FileHandler(self.log_file)
         self.log_handler.setFormatter(self.log_formatter)
 
