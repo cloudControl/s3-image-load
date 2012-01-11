@@ -73,20 +73,19 @@ Here is the usage from `s3-image-download`:
 
 	usage: s3-image-download.py [-h, --help] [command]
 
-	s3-image-download.py AWS S3 SquashFS Image Downloader
+    s3-image-download.py AWS S3 SquashFS Image Downloader
 
-	optional arguments:
-	  -h, --help            show this help message and exit
-	  -v, --version         show program's version number and exit
-	  -d, --debug
-	  -o OUTPUT, --output OUTPUT
-	                        Output file (under which to store the S3 object)
-	  -k KEY, --key KEY     The identifying key for this image in S3
-	  -b BUCKET, --bucket BUCKET
-	                        A valid AWS S3 bucket (default:
-	                        "images.squashfs.cloudcontrol.com")
+    optional arguments:
+      -h, --help            show this help message and exit
+      -v, --version         show program's version number and exit
+      -o OUTPUT, --output OUTPUT
+                            Output file (under which to store the S3 object)
+      -k KEY, --key KEY     The identifying key for this image in S3
+      -b BUCKET, --bucket BUCKET
+                            A valid AWS S3 bucket (default:
+                            "images.squashfs.cloudcontrol.com")
 
-	And now you're in control!
+    And now you're in control!
 
 
 And here is the usage from `s3-image-upload`:
@@ -99,7 +98,6 @@ And here is the usage from `s3-image-upload`:
     optional arguments:
       -h, --help            show this help message and exit
       -v, --version         show program's version number and exit
-      -d, --debug
       -f FILE, --file FILE  An (squashFS) image file to upload to S3
       -k KEY, --key KEY     The identifying key for this image in S3
       -b BUCKET, --bucket BUCKET
