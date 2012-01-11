@@ -16,7 +16,11 @@ Setup
 
         $ export PATH=$PATH:<repository>
 
-3. Make sure to add your AWS credentials to **either one** of following:
+3. Install `boto`:
+
+        $ pip install boto
+
+4. Make sure to add your AWS credentials to **either one** of following:
 
 	1. [BotoConfig](http://code.google.com/p/boto/wiki/BotoConfig)
 
