@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-    Copyright 2010 cloudControl GmbH
-
+    Copyright 2011 cloudControl GmbH
     This is the ConfigurationHandler. You can manage all configuration for your applications
     by just creating a 'settings.cfg' file and putting all values into that config file.
 
-    Bug request to: Hans-Gunther Schmidt (hgs@cloudcontrol.com)
+    s3-image-load is freely distributable under the terms of an MIT-style license. 
 """
 
 import ConfigParser

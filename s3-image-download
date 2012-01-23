@@ -1,4 +1,9 @@
 #!/bin/bash
+#
+# Copyright 2011 cloudControl GmbH
+#
+# s3-image-load is freely distributable under the terms of an MIT-style license. 
+#
 
 SCRIPTS=$(dirname $0)
 COMMAND=$0

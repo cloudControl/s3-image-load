@@ -4,7 +4,7 @@
 
     This is the LogHandler. This class provides easy means of logging to a file.
 
-    Bug request to: Hans-Gunther Schmidt (hgs@cloudcontrol.com)
+    s3-image-load is freely distributable under the terms of an MIT-style license. 
 """
 
 import logging

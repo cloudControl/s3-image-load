@@ -8,7 +8,7 @@
         $ export AWS_ACCESS_KEY_ID=<Your AWS Access Key ID>
         $ export AWS_SECRET_ACCESS_KEY=<Your AWS Secret Access Key>
 
-    Bug request to: Hans-Gunther Schmidt (hgs@cloudcontrol.com)
+    s3-image-load is freely distributable under the terms of an MIT-style license. 
 """
 import argparse
 from ConfigurationHandler import ConfigurationHandler
