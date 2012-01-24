@@ -111,8 +111,6 @@ And here is the usage from `s3-image-upload`:
 
     And now you're in control!
 
-
-License
--------
-Copyright (c) 2010-2011 cloudControl GmbH
-
+Notes
+-----
+(c) 2011 cloudControl GmbH
