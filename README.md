@@ -111,6 +111,7 @@ And here is the usage from `s3-image-upload`:
 
     And now you're in control!
 
-Notes
------
-(c) 2011 cloudControl GmbH
+
+License
+-------
+`s3-image-load` is available under the Apache License 2.0
