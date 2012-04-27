@@ -78,11 +78,11 @@ def upload(image_file, image_key, bucket_name):
         key = bucket.new_key(image_key)
         key.set_contents_from_filename(image_file)
     except boto.exception.S3CreateError as error:
-        log.error("Could not create {}! Error: {}".format(image_key, error))
+        log.error("Could not create {0}! Error: {1}".format(image_key, error))
     except (boto.exception.S3DataError, boto.exception.S3PermissionsError, boto.exception.S3ResponseError) as error:
-        log.error("Ran into boto.exception.S3DataError! Error: {}".format(error))
+        log.error("Ran into boto.exception.S3DataError! Error: {0}".format(error))
     except Exception as error:
-        log.error("Unexpected error! Error: {}".format(error))
+        log.error("Unexpected error! Error: {0}".format(error))
         sys.exit(1)
 
     return 0
@@ -99,11 +99,11 @@ def download(destination_file, image_key, bucket_name):
         key = s3.get_bucket(bucket_name).get_key(image_key)
         key.get_contents_to_filename(destination_file)
     except boto.exception.S3CreateError as error:
-        log.error("Could not create {}! Error: {}".format(image_key, error))
+        log.error("Could not create {0}! Error: {1}".format(image_key, error))
     except (boto.exception.S3DataError, boto.exception.S3PermissionsError, boto.exception.S3ResponseError) as error:
-        log.error("Ran into boto.exception.S3DataError! Error: {}".format(error))
+        log.error("Ran into boto.exception.S3DataError! Error: {0}".format(error))
     except Exception as error:
-        log.error("Unexpected error! Error: {}".format(error))
+        log.error("Unexpected error! Error: {0}".format(error))
         sys.exit(1)
 
     return 0

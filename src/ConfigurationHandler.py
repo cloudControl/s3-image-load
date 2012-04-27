@@ -28,7 +28,7 @@ class ConfigurationHandler(object):
 
     """
 
-    default_configuration_file_name = '{}/.s3_image_load.cfg'.format(os.path.expanduser('~'))
+    default_configuration_file_name = '{0}/.s3_image_load.cfg'.format(os.path.expanduser('~'))
 
     default_config_set = {
         'Logging' : {

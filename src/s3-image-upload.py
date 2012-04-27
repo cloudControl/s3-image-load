@@ -56,15 +56,15 @@ def parse_shell_parameters():
 
     parser = argparse.ArgumentParser(description=description, epilog=epilog, usage=usage)
 
-    parser.add_argument('-v', '--version', action='version', version='%(prog)s ver.{}'.format(__version__))
+    parser.add_argument('-v', '--version', action='version', version='%(prog)s ver.{0}'.format(__version__))
     parser.add_argument('-i', '--input', action='store', help="An (squashFS) image input file to upload to S3",
         required=True)
     parser.add_argument('-k', '--key', action='store', help="The identifying key for this image in S3",
         required=True)
     parser.add_argument('-b', '--bucket', action='store', default=config.get('S3', 'bucket'),
-        help="A valid AWS S3 bucket (default: \"{}\")".format(config.get('S3', 'bucket')))
+        help="A valid AWS S3 bucket (default: \"{0}\")".format(config.get('S3', 'bucket')))
 
-    log.debug("Shell arguments: {}".format(parser.parse_args()))
+    log.debug("Shell arguments: {0}".format(parser.parse_args()))
 
     return parser.parse_args()
 
@@ -83,11 +83,11 @@ def main():
 
     # Given image file is not a valid file? Hmm, that's a problem!
     if not os.path.isfile(image_file):
-        log.error("{} is not a valid (image) file!".format(image_file))
-        sys.exit("{} is not a valid (image) file!".format(image_file))
+        log.error("{0} is not a valid (image) file!".format(image_file))
+        sys.exit("{0} is not a valid (image) file!".format(image_file))
 
     # Ok, all set! We can upload the file ...
-    log.debug('Uploading file: "{}" with key: "{}" to bucket: "{}"'.format(image_file, image_key, bucket))
+    log.debug('Uploading file: "{0}" with key: "{1}" to bucket: "{2}"'.format(image_file, image_key, bucket))
     upload(image_file, image_key, bucket)
 
     return 0

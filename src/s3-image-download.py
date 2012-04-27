@@ -46,15 +46,15 @@ def parse_shell_parameters():
 
     parser = argparse.ArgumentParser(description=description, epilog=epilog, usage=usage)
 
-    parser.add_argument('-v', '--version', action='version', version='%(prog)s ver.{}'.format(__version__))
+    parser.add_argument('-v', '--version', action='version', version='%(prog)s ver.{0}'.format(__version__))
     parser.add_argument('-o', '--output', action='store', help="Output file (under which to store the S3 object)",
         required=True)
     parser.add_argument('-k', '--key', action='store', help="The identifying key for this image in S3",
         required=True)
     parser.add_argument('-b', '--bucket', action='store', default=config.get('S3', 'bucket'),
-        help="A valid AWS S3 bucket (default: \"{}\")".format(config.get('S3', 'bucket')))
+        help="A valid AWS S3 bucket (default: \"{0}\")".format(config.get('S3', 'bucket')))
 
-    log.debug("Shell arguments: {}".format(parser.parse_args()))
+    log.debug("Shell arguments: {0}".format(parser.parse_args()))
 
     return parser.parse_args()
 
@@ -72,7 +72,7 @@ def main():
     image_key = args.key
 
     # Ok, all set! We can download the file ...
-    log.debug('Downloading with key: "{}" from bucket: "{}" to output file: "{}" '.format(image_key, bucket,
+    log.debug('Downloading with key: "{0}" from bucket: "{1}" to output file: "{2}" '.format(image_key, bucket,
         destination_file))
     download(destination_file, image_key, bucket)
 
