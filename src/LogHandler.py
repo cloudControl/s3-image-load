@@ -25,11 +25,11 @@ class LogHandler(object):
         This is the LogHandler. This class provides easy means of logging to a file.
     """
 
-    log_levels   = ['DEBUG', 'INFO', 'WARNING', 'ERROR']
+    log_levels = ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']
 
-    logger       = 'default'
-    log_format   = '%(asctime)-15s %(name)s %(levelname)s %(message)s'
-    log_dir      = '/tmp/'
+    logger = 'default'
+    log_format = '%(asctime)-15s %(name)s %(levelname)s %(message)s'
+    log_dir = '/tmp/'
     log_filename = '{0}.log'.format(logger)
 
 
@@ -43,8 +43,8 @@ class LogHandler(object):
             log_filename = self.log_filename
 
         self.log_formatter = logging.Formatter(self.log_format)
-        self.log_file      = '{0}/{1}'.format(self.log_dir, log_filename)
-        self.log_handler   = logging.FileHandler(self.log_file)
+        self.log_file = '{0}/{1}'.format(self.log_dir, log_filename)
+        self.log_handler = logging.StreamHandler()
         self.log_handler.setFormatter(self.log_formatter)
 
 
