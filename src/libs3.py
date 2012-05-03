@@ -33,7 +33,9 @@
 
 import sys
 import boto
+from boto.s3.connection import S3Connection
 from LogHandler import LogHandler
+from nodecontroller.config import get_aws_s3_credentials
 
 ####################################################################
 #
@@ -57,13 +59,14 @@ def connect():
     """
     log = logger.get_logger("connect")
 
+    credentials = get_aws_s3_credentials()
     try:
-        s3 = boto.connect_s3()
+        conn = S3Connection(credentials['aws_access_key'], credentials['aws_secret_key'])
         log.debug(">>> Connected to S3")
     except boto.exception.NoAuthHandlerFound:
         sys.exit("Could not find valid AWS credentials! Make sure to set \'AWS_ACCESS_KEY_ID\' and "
                  "\'AWS_SECRET_ACCESS_KEY\'!")
-    return s3
+    return conn
 
 
 def upload(image_file, image_key, bucket_name):
