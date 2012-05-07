@@ -26,6 +26,7 @@
 import sys
 import boto
 from boto.s3.connection import S3Connection
+from boto.utils import parse_ts
 from LogHandler import LogHandler
 from nodecontroller.config import get_aws_s3_credentials
 
@@ -124,12 +125,16 @@ def purge(bucket_name, prefix, leave):
 
     def sort_keys(key1, key2):
         # compare the datetime objects from boto
-        ts1 = boto.utils.parse_ts(key1.last_modified)
-        ts2 = boto.utils.parse_ts(key2.last_modified)
+        ts1 = parse_ts(key1.last_modified)
+        ts2 = parse_ts(key2.last_modified)
         if ts2 > ts1: return 1
         if ts2 < ts1: return -1
         return 0
 
+    for k in keys:
+        print k
+
+    print
     to_delete = sorted(keys, cmp=sort_keys)[leave:]
     for key in to_delete:
         try:
