@@ -139,8 +139,8 @@ def purge(bucket_name, prefix, leave):
         # compare the datetime objects from boto
         ts1 = parse_ts(key1.last_modified)
         ts2 = parse_ts(key2.last_modified)
-        if ts2 > ts1: return 1
-        if ts2 < ts1: return -1
+        if ts2 > ts1: return -1
+        if ts2 < ts1: return 1
         return 0
 
     to_delete = sorted(keys, cmp=sort_keys)[leave:]
