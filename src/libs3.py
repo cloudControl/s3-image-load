@@ -21,14 +21,6 @@
     This is the s3-image-upload.py script for cloudControl's new 
     architecture. With this file a user is enabled to upload a 
     given file (a squashed image file) to S3.
-
-    In order for this to work, the AWS credentials need to be 
-    set via environment variables! Make sure to set following 
-    environment variables:
-
-        $ export AWS_ACCESS_KEY_ID=<Your AWS Access Key ID>
-        $ export AWS_SECRET_ACCESS_KEY=<Your AWS Secret Access Key>
-
 """
 
 import sys
@@ -110,3 +102,42 @@ def download(destination_file, image_key, bucket_name):
         sys.exit(1)
 
     return 0
+
+def purge(bucket_name, prefix, leave):
+    """
+        Upload a given image file to our S3 bucket
+    """
+    log = logger.get_logger("download")
+
+    keys = []
+    try:
+        s3 = connect()
+        keys = s3.get_bucket(bucket_name).get_all_keys(prefix=prefix)
+    except (boto.exception.StorageResponseError) as error:
+        log.error("Ran into boto.exception.StorageResponseError! Error: {0}".format(error))
+    except Exception as error:
+        log.error("An undefined error occured! Error: {0}".format(error))
+        sys.exit(1)
+
+    if not len(keys):
+        return
+
+    def sort_keys(key1, key2):
+        # compare the datetime objects from boto
+        ts1 = boto.utils.parse_ts(key1.last_modified)
+        ts2 = boto.utils.parse_ts(key2.last_modified)
+        if ts2 > ts1: return 1
+        if ts2 < ts1: return -1
+        return 0
+
+    to_delete = sorted(keys, cmp=sort_keys)[leave:]
+    for key in to_delete:
+        try:
+            key.delete()
+        except boto.exception.BotoServerError, error:
+            log.error("Image with key {0} could not removed on server! Error: {1}".format(key, error))
+        except Exception, error:
+            log.error("An undefined error occured! key: {0}, error {1}".format(key, error))
+            break
+
+    return to_delete
