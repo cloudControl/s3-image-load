@@ -146,6 +146,8 @@ def purge(bucket_name, prefix, leave):
     to_delete = sorted(keys, cmp=sort_keys)[leave:]
     for key in to_delete:
         try:
+            if key.name.endswith('/'):
+                continue
             key.delete()
         except boto.exception.BotoServerError, error:
             log.error("Image with key {0} could not removed on server! Error: {1}".format(key, error))
