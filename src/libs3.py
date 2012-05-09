@@ -74,7 +74,10 @@ def upload(image_file, image_key, bucket_name):
 
     try:
         s3 = connect()
-        bucket = s3.create_bucket(bucket_name)
+        bucket = s3.get_bucket(bucket_name)
+        if not bucket_name in s3.get_all_buckets():
+            bucket = s3.create_bucket(bucket_name)
+
         key = bucket.new_key(image_key)
         key.set_contents_from_filename(image_file)
     except boto.exception.S3CreateError as error:
