@@ -59,7 +59,7 @@ def main():
     prefix = args.prefix
     remain = args.remain
 
-    log.debug('Purging with prefix: "{0}" remain: "{2}" images'.format(prefix, remain))
+    log.debug('Purging with prefix: "{0}" remain: "{1}" images'.format(prefix, remain))
     purge(prefix, remain)
 
     return 0
