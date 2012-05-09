@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
     Licensed to the Apache Software Foundation (ASF) under one
@@ -61,8 +62,6 @@ def parse_shell_parameters():
         required=True)
     parser.add_argument('-k', '--key', action='store', help="The identifying key for this image in S3",
         required=True)
-    parser.add_argument('-b', '--bucket', action='store', default=config.get('S3', 'bucket'),
-        help="A valid AWS S3 bucket (default: \"{0}\")".format(config.get('S3', 'bucket')))
 
     log.debug("Shell arguments: {0}".format(parser.parse_args()))
 
@@ -78,7 +77,6 @@ def main():
 
     # Transfer shell arguments to variables
     image_file = args.input
-    bucket = args.bucket
     image_key = args.key
 
     # Given image file is not a valid file? Hmm, that's a problem!
@@ -87,8 +85,8 @@ def main():
         sys.exit("{0} is not a valid (image) file!".format(image_file))
 
     # Ok, all set! We can upload the file ...
-    log.debug('Uploading file: "{0}" with key: "{1}" to bucket: "{2}"'.format(image_file, image_key, bucket))
-    upload(image_file, image_key, bucket)
+    log.debug('Uploading file: "{0}" with key: "{1}"'.format(image_file, image_key))
+    upload(image_file, image_key)
 
     return 0
 

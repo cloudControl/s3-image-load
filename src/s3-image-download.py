@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
     Licensed to the Apache Software Foundation (ASF) under one
@@ -51,8 +52,6 @@ def parse_shell_parameters():
         required=True)
     parser.add_argument('-k', '--key', action='store', help="The identifying key for this image in S3",
         required=True)
-    parser.add_argument('-b', '--bucket', action='store', default=config.get('S3', 'bucket'),
-        help="A valid AWS S3 bucket (default: \"{0}\")".format(config.get('S3', 'bucket')))
 
     log.debug("Shell arguments: {0}".format(parser.parse_args()))
 
@@ -68,13 +67,11 @@ def main():
 
     # Transfer shell arguments to variables
     destination_file = args.output
-    bucket = args.bucket
     image_key = args.key
 
     # Ok, all set! We can download the file ...
-    log.debug('Downloading with key: "{0}" from bucket: "{1}" to output file: "{2}" '.format(image_key, bucket,
-        destination_file))
-    download(destination_file, image_key, bucket)
+    log.debug('Downloading with key: "{0}" to output file: "{2}" '.format(image_key, destination_file))
+    download(destination_file, image_key)
 
     return 0
 

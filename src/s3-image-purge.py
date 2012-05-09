@@ -41,8 +41,7 @@ def parse_shell_parameters():
 
     parser.add_argument('-v', '--version', action='version', version='%(prog)s ver.{0}'.format(__version__))
     parser.add_argument('-p', '--prefix', help="The prefix for key search in S3", required=True)
-    parser.add_argument('-b', '--bucket', default=config.get('S3', 'bucket'), help="A valid AWS S3 bucket (default: \"{0}\")".format(config.get('S3', 'bucket')))
-    parser.add_argument('-l', '--leave-newest', dest='leave', help="Leave the 'n' newest in S3", type=int, default=10)
+    parser.add_argument('-r', '--remain', dest='remain', help="Remain the 'n' newest in S3", type=int, default=10)
 
     log.debug("Shell arguments: {0}".format(parser.parse_args()))
 
@@ -57,12 +56,11 @@ def main():
     args = parse_shell_parameters()
 
     # Transfer shell arguments to variables
-    bucket = args.bucket
     prefix = args.prefix
-    leave = args.leave
+    remain = args.remain
 
-    log.debug('Purging with prefix: "{0}" from bucket: "{1}" leave: "{2}" images'.format(prefix, bucket, leave))
-    purge(bucket, prefix, leave)
+    log.debug('Purging with prefix: "{0}" remain: "{2}" images'.format(prefix, remain))
+    purge(prefix, remain)
 
     return 0
 

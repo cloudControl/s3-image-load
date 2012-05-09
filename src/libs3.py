@@ -46,13 +46,14 @@ logger = LogHandler(log_filename='s3-image-load.log')
 #
 ####################################################################
 
+credentials = get_aws_s3_credentials()
+
+
 def connect():
     """
         Connect to S3 with credentials
     """
     log = logger.get_logger("connect")
-
-    credentials = get_aws_s3_credentials()
     try:
         conn = S3Connection(credentials['aws_access_key'], credentials['aws_secret_key'])
         log.debug(">>> Connected to S3")
@@ -62,7 +63,7 @@ def connect():
     return conn
 
 
-def upload(image_file, image_key, bucket_name):
+def upload(image_file, image_key):
     """
         Upload a given image file to our S3 bucket
     """
@@ -70,7 +71,7 @@ def upload(image_file, image_key, bucket_name):
 
     try:
         s3 = connect()
-        bucket = s3.create_bucket(bucket_name)
+        bucket = s3.create_bucket(credentials['images_bucketname'])
         key = bucket.new_key(image_key)
         key.set_contents_from_filename(image_file)
     except boto.exception.S3CreateError as error:
@@ -84,7 +85,7 @@ def upload(image_file, image_key, bucket_name):
     return 0
 
 
-def download(destination_file, image_key, bucket_name):
+def download(destination_file, image_key):
     """
         Upload a given image file to our S3 bucket
     """
@@ -92,7 +93,7 @@ def download(destination_file, image_key, bucket_name):
 
     try:
         s3 = connect()
-        key = s3.get_bucket(bucket_name).get_key(image_key)
+        key = s3.get_bucket(credentials['images_bucketname']).get_key(image_key)
         key.get_contents_to_filename(destination_file)
     except boto.exception.S3CreateError as error:
         log.error("Could not create {0}! Error: {1}".format(image_key, error))
@@ -104,7 +105,8 @@ def download(destination_file, image_key, bucket_name):
 
     return 0
 
-def purge(bucket_name, prefix, leave):
+
+def purge(prefix, remain):
     """
         Upload a given image file to our S3 bucket
     """
@@ -113,7 +115,7 @@ def purge(bucket_name, prefix, leave):
     keys = []
     try:
         s3 = connect()
-        keys = s3.get_bucket(bucket_name).get_all_keys(prefix=prefix)
+        keys = s3.get_bucket(credentials['images_bucketname']).get_all_keys(prefix=prefix)
     except (boto.exception.StorageResponseError) as error:
         log.error("Ran into boto.exception.StorageResponseError! Error: {0}".format(error))
     except Exception as error:
@@ -143,7 +145,10 @@ def purge(bucket_name, prefix, leave):
         if ts2 < ts1: return -1
         return 0
 
-    to_delete = sorted(keys, cmp=sort_keys)[leave:]
+    for k in sorted(keys, cmp=sort_keys):
+        print k.last_modified, k.name
+
+    to_delete = sorted(keys, cmp=sort_keys)[remain:]
     for key in to_delete:
         try:
             if key.name.endswith('/'):
